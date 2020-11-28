@@ -132,7 +132,7 @@ class CalculatorTest {
    	   } catch(ServiceException e) {
    	   	   actual = e.getCause().getMessage();
    	   }
-   	   System.out.println("FUCK: " + actual);
+   	  
    	   assertEquals("java.lang.IllegalArgumentException: Cannot divide by zero", actual);
    	   
    	   shutdown();

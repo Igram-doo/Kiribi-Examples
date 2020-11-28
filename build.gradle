@@ -1,0 +1,41 @@
+apply plugin: 'base'	
+
+subprojects {
+	apply plugin: 'java'
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		testImplementation(platform('org.junit:junit-bom:5.7.0'))
+		testImplementation('org.junit.jupiter:junit-jupiter')
+	
+		implementation('rs.igram.kiribi:kiribi-io') {
+			version {
+				branch = 'main'
+			}
+		}
+	
+		implementation('rs.igram.kiribi:kiribi-crypto') {
+			version {
+				branch = 'main'
+			}
+		}
+	
+		implementation('rs.igram.kiribi:kiribi-net') {
+			version {
+				branch = 'master'
+			}
+		}
+	
+		implementation('rs.igram.kiribi:kiribi-service') {
+			version {
+				branch = 'master'
+			}
+		}
+	}
+}
+
+
+group = 'rs.igram.kiribi'
+version = 'v0.1-beta'

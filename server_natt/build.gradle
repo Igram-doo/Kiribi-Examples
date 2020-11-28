@@ -1,0 +1,22 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+	api project(':base')
+	api project(':base_net')
+	api project(':base_platform')
+	api project(':base_service')
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+            exclude 'test/**'
+            if(project.property('java8')) exclude '**/module-info.java'
+       }
+   }
+}
+
+ext.moduleName = 'com.kiribi.service.lease' 

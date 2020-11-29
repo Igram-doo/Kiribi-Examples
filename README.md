@@ -8,7 +8,7 @@ A collections of examples using the Kiribi framework.
 ##### Servers
 
 ###### NAT Transversal Server
-To do
+A simple NAT transversal server. 
 
 ##### Services
 

@@ -1,113 +1,76 @@
-package com.kiribi.services.lease;
+package rs.igram.kiribi.examples.servers.natt;
 
-import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.ForkJoinTask;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.io.Console;
 
-import com.kiribi.Kiribi;
-import com.kiribi.auth.Authenticator;
-import com.kiribi.crypto.Key;
-import com.kiribi.io.VarInput;
-import com.kiribi.io.VarOutput;
-import com.kiribi.service.Message;
-import com.kiribi.service.ServiceId;
-import com.kiribi.service.Session;
+import rs.igram.kiribi.net.natt.NATTServer;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
-import static com.kiribi.services.lease.LeaseProtocol.*;
-
-public abstract class LeaseSession extends Session {
-	protected static final ForkJoinPool executor = ForkJoinPool.commonPool();
-    private Future<?> renewer;
-    
-    protected long id = -1;
-
-	public LeaseSession(Key key, ServiceId id){
-		super(Authenticator.SystemAuthenticator.factory(key), id);
+public class Main {
+	protected final Console console = System.console();
+	protected NATTServer natt;
+	
+	public static void main(String[] args) throws Exception {
+		new Main().start();		
+	//	}catch(Exception e){
+	//		e.printStackTrace();
+	//		System.exit(1);
+	//	}	
 	}
 	
-	@Override
-	public void close() {
+	protected void start() throws Exception {
+		System.out.println("Starting NAT Server --");
+		natt = new NATTServer();                     
 		try{
-			if(id != -1) cancel(id).get(3, SECONDS);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		super.close();
-	}	
-	
-	// ---- requests ----	
-	protected void renew() {
-		try{
-			Message request = Message.request(CLIENT_REQUEST_RENEW);
-			VarOutput out = request.out();
-			out.writeLong(id);
-			request(request, 
-				new ResponseAdapter(
-					SERVICE_RESPONSE_RENEWED, 
-					response -> {
-						switch(response.code()){
-						case SERVICE_RESPONSE_RENEWED:
-							// continue
-							break;
-						case SERVICE_RESPONSE_CANCELED:
-							// cancel renewer if exists
-							if(renewer != null) renewer.cancel(true);
-							canceled();
-							break;
-						default:
-							// ?
-							canceled();
-						}
-					},
-					error -> canceled() // ?
-				)
-			); 
-		}catch(IOException e){
-			// ?
-			canceled();
-		}
-	}
-	
-	protected  Future<Void> cancel(long id) throws IOException {	
-		final CompletableFuture<Void> future = new CompletableFuture<>();
-		Message request = Message.request(CLIENT_REQUEST_CANCEL);
-		VarOutput out = request.out();
-		out.writeLong(id);
-		request(
-			request, 
-			new ResponseAdapter(
-				SERVICE_RESPONSE_CANCELED,
-				response -> future.complete(null),
-				error -> future.completeExceptionally(new IOException(error))
-			)
-		); 
-		return future;
-	}
-
-	protected void manage(long lease) {
-		if(renewer != null || lease < 5) return;
-		final long interval = (lease * 4) / 5;
-		renewer = submitTask(() -> {
-			while(!Thread.currentThread().isInterrupted()){
-				try{
-					TimeUnit.MILLISECONDS.sleep(interval);
-					Kiribi.submit(() -> renew());
-				}catch(Exception e){
-					break;
+		final Console console = System.console();
+		if(console != null){
+			Thread t = new Thread(() -> {
+				while(!Thread.currentThread().isInterrupted()){
+					process(read());
 				}
-			}
-		});
+			}, "NATT Daemon");
+			t.setDaemon(false);
+			t.start();
+		}else{
+			Thread t = new Thread(() -> {
+				try{
+					Thread.sleep(Long.MAX_VALUE);
+				}catch(InterruptedException e){
+					return;
+				}
+			}, "NATT Daemon");
+			t.setDaemon(false);
+			t.start();
+			System.out.println("no console");
+		}
+		}catch(Throwable t){
+			t.printStackTrace();
+		}
 	}
 	
-	protected void canceled() {}
+	protected String read() {
+		if(console != null){
+			return console.readLine();
+		}else{
+			return null;
+		}
+	}
 	
-	protected static final Future<?> submitTask(Runnable task) {
-		ForkJoinTask<?> t = ForkJoinTask.adapt(task);
-		return executor.submit(t);
+	protected void write(String s) {
+		if(console != null){
+			console.writer().println(s);
+		}else{
+			
+		}
+	}
+	
+	protected void process(String cmd) {
+		switch(cmd){
+		// shutdown
+		case "q":
+			System.exit(0);
+			break;
+		default: 
+			write("Unknown Command.");
+			break;
+		}
 	}
 }

@@ -1,4 +1,4 @@
-//include 'server_natt'
+include 'server_natt'
 include 'service_calculator'
 include 'service_helloworld'
 include 'service_lease'

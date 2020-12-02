@@ -1,35 +1,24 @@
 # Kiribi Examples
 ### Introduction
-A collections of examples using the Kiribi framework.
+A collection of examples using the Kiribi Service Framework.
 
 ### Examples
-A collections of examples using the Kiribi framework.
-
-##### Servers
+Below are brief descriptions of several examples using the Kiribi Service Framework.
 
 ###### NAT Transversal Server
 A simple NAT transversal server. 
 
-##### Services
+###### HelloWorld
+The classic HelloWorld as a service.
 
-###### Hello World
-The classic.
-
-###### Calculator World
-Simple calculator. Demonstrates multiple requests/responses and multiple response codes.
+###### Calculator
+Simple calculator service. Demonstrates multiple requests/responses and multiple response codes.
 
 ###### Lease
-Abstract Lease Service
+An abstract lease service
 
-##### Peers
-To do
-
-###### Transient Peer
-To do
-
-###### Persistent Peer
-To do
-
-### Requirements
-To do
+### To Do
+* More examples.
+* Determine minimum supported Java version.
+* Finish unit tests.
 

@@ -18,10 +18,10 @@ Simple calculator service. Demonstrates multiple requests/responses and multiple
 An abstract lease service
 
 ### To Do
-* Add a runtime option to specify a non-default port for the NAT Server.
-* Add a runtime option to specify the network interface on multi-homed devices for the NAT Server.
-* Add GRAAL build for the NAT Server.
-* More examples.
 * Determine minimum supported Java version.
 * Finish unit tests.
+* Add a runtime option to specify a non-default port for the NAT Server.
+* Add a runtime option to specify the network interface on multi-homed devices for the example NAT Server.
+* Add GRAAL build for the NAT Server.
+* More examples.
 

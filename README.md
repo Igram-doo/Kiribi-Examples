@@ -1,4 +1,6 @@
 # Kiribi Examples
+A collection of examples using the Kiribi Modules
+
 ### Introduction
 A collection of examples using the Kiribi Service Framework.
 

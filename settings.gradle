@@ -2,6 +2,7 @@ include 'server_natt'
 include 'service_calculator'
 include 'service_helloworld'
 include 'service_lease'
+include 'store_encrypted'
 
 sourceControl {
     gitRepository("https://github.com/Igram-doo/Kiribi-IO.git") {
@@ -15,6 +16,9 @@ sourceControl {
     }
     gitRepository("https://github.com/Igram-doo/Kiribi-Service.git") {
         producesModule("rs.igram.kiribi:kiribi-service")
+    }
+    gitRepository("https://github.com/Igram-doo/Kiribi-Store.git") {
+        producesModule("rs.igram.kiribi:kiribi-store")
     }
 }
 

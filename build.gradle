@@ -33,6 +33,12 @@ subprojects {
 				branch = 'master'
 			}
 		}
+	
+		implementation('rs.igram.kiribi:kiribi-store') {
+			version {
+				branch = 'main'
+			}
+		}
 	}
 }
 

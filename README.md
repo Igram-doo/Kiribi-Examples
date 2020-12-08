@@ -19,6 +19,9 @@ Simple calculator service. Demonstrates multiple requests/responses and multiple
 ###### Lease
 An abstract lease service
 
+###### Encrypted Store
+Encrypted ObjectStore
+
 ### To Do
 * Determine minimum supported Java version.
 * Finish unit tests.

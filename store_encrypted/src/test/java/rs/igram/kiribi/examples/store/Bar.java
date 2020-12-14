@@ -40,6 +40,11 @@ import rs.igram.kiribi.io.Encodable;
 import rs.igram.kiribi.io.VarInput;
 import rs.igram.kiribi.io.VarOutput;
 
+/**
+ * 
+ *
+ * @author Michael Sargent
+ */
 public class Bar implements Encodable {
 
 	private int i;

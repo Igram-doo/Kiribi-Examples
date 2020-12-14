@@ -45,6 +45,11 @@ import org.junit.jupiter.api.io.TempDir;
 import rs.igram.kiribi.io.*;
 import rs.igram.kiribi.store.*;
 
+/**
+ * 
+ *
+ * @author Michael Sargent
+ */
 public class EncryptedStoreDelegateTest {
 	static final SecureRandom random;
 

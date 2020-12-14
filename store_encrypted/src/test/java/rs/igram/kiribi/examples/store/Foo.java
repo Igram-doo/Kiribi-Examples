@@ -40,6 +40,11 @@ import rs.igram.kiribi.io.Encodable;
 import rs.igram.kiribi.io.VarInput;
 import rs.igram.kiribi.io.VarOutput;
 
+/**
+ * 
+ *
+ * @author Michael Sargent
+ */
 public class Foo implements Encodable {
 	static final SecureRandom random = new SecureRandom();
 	

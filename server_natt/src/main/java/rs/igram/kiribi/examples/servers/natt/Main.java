@@ -25,11 +25,8 @@
 package rs.igram.kiribi.examples.servers.natt;
 
 import java.io.Console;
-
 import java.net.InetAddress;
-import java.net.Inet4Address;
 import java.net.NetworkInterface;
-import java.util.Enumeration;
 
 import rs.igram.kiribi.net.NetworkMonitor;
 import rs.igram.kiribi.net.natt.NATTServer;

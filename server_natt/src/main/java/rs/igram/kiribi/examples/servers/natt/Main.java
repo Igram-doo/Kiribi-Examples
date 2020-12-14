@@ -136,25 +136,4 @@ public class Main {
 			break;
 		}
 	}
-/*		   
-	static InetAddress internal() {
-		try{
-			for(Enumeration<NetworkInterface> e1 = NetworkInterface.getNetworkInterfaces(); e1.hasMoreElements();){
-				NetworkInterface i = e1.nextElement();
-				 if(!i.isLoopback() && i.isUp() && !i.toString().contains("Teredo") && !i.isVirtual()){
-					for(Enumeration<InetAddress> e2 = i.getInetAddresses(); e2.hasMoreElements();){
-						InetAddress a = e2.nextElement();
-						if(a instanceof Inet4Address && !a.isLinkLocalAddress()){
-							return a;
-						}
-					}
-				}
-			}			
-		}catch(Exception e){
-			// ignore
-		}
-		
-		return null;
-	}
-	*/
 }

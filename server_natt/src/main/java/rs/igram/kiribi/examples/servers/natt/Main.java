@@ -40,7 +40,7 @@ import rs.igram.kiribi.net.natt.NATTServer;
  *
  * @author Michael Sargent
  */
-public class Main {
+public class Main implements Runnable {
 	protected final Console console = System.console();
 	protected NATTServer natt;
 	
@@ -70,39 +70,33 @@ public class Main {
 			new Main().start(inet, port);		
 		
 		} catch(Throwable t) {
-			System.out.println("ERROR: " + t.getMessage());
+			System.err.println("ERROR: " + t.getMessage());
 			System.exit(1);
 		}
 	}
 	
 	protected void start(InetAddress inet, int port) {
-		System.out.println("Starting NAT Server --");
+		System.out.println("Starting NAT Server: " + inet + ":" + port);
 		natt = new NATTServer();  
 		natt.start(inet, port);
-		try{
-			final Console console = System.console();
-			if(console != null){
-				Thread t = new Thread(() -> {
-					while(!Thread.currentThread().isInterrupted()){
-						process(read());
-					}
-				}, "NATT Daemon");
-				t.setDaemon(false);
-				t.start();
-			}else{
-				Thread t = new Thread(() -> {
-					try{
-						Thread.sleep(Long.MAX_VALUE);
-					}catch(InterruptedException e){
-						return;
-					}
-				}, "NATT Daemon");
-				t.setDaemon(false);
-				t.start();
-				System.out.println("no console");
+		
+		Thread t = new Thread(this, "NATT Server");
+		t.setDaemon(false);
+		t.start();
+	}
+	
+	@Override
+	public void run() {
+		if(console != null){
+			while(!Thread.currentThread().isInterrupted()){
+				process(read());
 			}
-		}catch(Throwable t){
-			t.printStackTrace();
+		} else {
+			try{
+				Thread.sleep(Long.MAX_VALUE);
+			}catch(InterruptedException e){
+				return;
+			}
 		}
 	}
 	

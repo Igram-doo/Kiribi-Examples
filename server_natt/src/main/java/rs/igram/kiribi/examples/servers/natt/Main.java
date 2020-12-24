@@ -26,7 +26,9 @@ package rs.igram.kiribi.examples.servers.natt;
 
 import java.io.Console;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 
 import rs.igram.kiribi.net.NetworkMonitor;
 import rs.igram.kiribi.net.natt.NATTServer;
@@ -75,10 +77,10 @@ public class Main implements Runnable {
 		}
 	}
 	
-	protected void start(InetAddress inet, int port) {
+	protected void start(InetAddress inet, int port) throws SocketException {
 		System.out.println("Starting NAT Server: " + inet + ":" + port);
 		natt = new NATTServer();  
-		natt.start(inet, port);
+		natt.start(new InetSocketAddress(inet, port));
 		
 		Thread t = new Thread(this, "NATT Server");
 		t.setDaemon(false);

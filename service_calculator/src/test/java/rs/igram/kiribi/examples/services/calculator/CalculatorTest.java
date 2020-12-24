@@ -142,7 +142,7 @@ class CalculatorTest {
 		System.out.println("INET: " + LOCAL_HOST);
 		executor = new NetworkExecutor();
 		server = new NATTServer();
-		server.start(LOCAL_HOST, NATTServer.SERVER_PORT);
+		server.start(new InetSocketAddress(LOCAL_HOST, NATTServer.SERVER_PORT));
 		admin1 = new ServiceAdmin(PAIR1, PORT1, SA1);
 		admin2 = new ServiceAdmin(PAIR2, PORT2, SA2);
 		

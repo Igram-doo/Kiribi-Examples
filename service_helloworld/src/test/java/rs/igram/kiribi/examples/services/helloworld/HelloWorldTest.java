@@ -103,7 +103,7 @@ class HelloWorldTest {
 	static ServiceAdmin admin(KeyPair pair, int port, InetSocketAddress serverAddress) throws Exception {
 		Address address = new Address(pair.getPublic());
 		InetSocketAddress socketAddress = new InetSocketAddress(NetworkMonitor.inet(), port);
-		EndpointProvider ep = EndpointProvider.udpProvider(new NetworkExecutor(), socketAddress, address, serverAddress);
+		EndpointProvider ep = EndpointProvider.udp(new NetworkExecutor(), socketAddress, address, serverAddress);
 		return new ServiceAdmin(pair, port, ep);
 	}
 	
@@ -127,8 +127,6 @@ class HelloWorldTest {
 		executor = new NetworkExecutor();
 		server = new NATTServer();
 		server.start(new InetSocketAddress(LOCAL_HOST, NATTServer.SERVER_PORT));
-		//admin1 = new ServiceAdmin(PAIR1, PORT1, SA1);
-		//admin2 = new ServiceAdmin(PAIR2, PORT2, SA2);
 		
 		admin1 = admin(PAIR1, PORT1, SA1);
 		admin2 = admin(PAIR2, PORT2, SA2);

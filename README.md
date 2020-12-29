@@ -10,6 +10,9 @@ Below are brief descriptions of several examples using the Kiribi Service Framew
 ###### NAT Transversal Server
 A simple NAT transversal server. 
 
+###### Lookup Server
+A simple Lookup server. 
+
 ###### HelloWorld
 The classic HelloWorld as a service.
 

@@ -1,3 +1,4 @@
+include 'server_lookup'
 include 'server_natt'
 include 'service_calculator'
 include 'service_helloworld'

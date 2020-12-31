@@ -30,5 +30,5 @@
 module rs.igram.kiribi.examples.servers.lookup {
 	requires java.base;
 	requires transitive rs.igram.kiribi.net;
-	//exports rs.igram.kiribi.examples.servers.lookup;
+	exports rs.igram.kiribi.examples.servers.lookup;
 }

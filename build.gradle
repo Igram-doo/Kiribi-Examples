@@ -2,6 +2,7 @@ apply plugin: 'base'
 
 subprojects {
 	apply plugin: 'java'
+	
 	repositories {
 		jcenter()
 	}
@@ -40,8 +41,12 @@ subprojects {
 			}
 		}
 	}
+	
+sourceCompatibility = 11
+targetCompatibility = 11
 }
 
 
 group = 'rs.igram.kiribi'
 version = 'v0.1-beta'
+

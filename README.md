@@ -25,9 +25,9 @@ An abstract lease service
 ###### Encrypted Store
 Encrypted ObjectStore
 
+Java version 11
+
 ### To Do
-* Determine minimum supported Java version.
 * Finish unit tests.
-* Add GRAAL build for the NAT Server.
 * More examples.
 

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
  
-package rs.igram.kiribi.examples.servers.Lookup;
+package rs.igram.kiribi.examples.servers.lookup;
 
 import java.io.Console;
 import java.io.IOException;

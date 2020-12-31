@@ -12,12 +12,16 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+    
+    // graal
+    id 'org.mikeneck.graalvm-native-image' version 'v1.0.0'
 }
 
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -50,15 +54,31 @@ javadoc {
     	links = ["https://docs.oracle.com/en/java/javase/15/docs/api/"]
     }
 }
+
+nativeImage {
+  graalVmHome = System.env.GRAAL_HOME
+  mainClass = 'rs.igram.kiribi.examples.servers.natt.Main'
+  executableName = 'kiribi_natt_server'
+  outputDirectory = file("$buildDir/bin")
+  arguments {
+    add '--no-fallback'
+  }
+}
+
 /*
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'rs.igram.kiribi.examples.servers.natt.Main'
-        )
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
- }
- */
+generateNativeImageConfig {
+  enabled = true
+  byRunningApplication {
+    stdIn("""
+    |total: 2
+    |contents:
+    |  - name: foo
+    |    size: 2052
+    |""".stripMargin())
+  }
+  byRunningApplicationWithoutArguments()
+  byRunningApplication {
+    arguments('-h')
+  }
+}
+*/

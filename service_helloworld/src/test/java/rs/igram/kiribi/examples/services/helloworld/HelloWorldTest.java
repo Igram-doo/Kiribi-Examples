@@ -103,7 +103,7 @@ class HelloWorldTest {
 	static ServiceAdmin admin(KeyPair pair, int port, InetSocketAddress serverAddress) throws Exception {
 		Address address = new Address(pair.getPublic());
 		InetSocketAddress socketAddress = new InetSocketAddress(NetworkMonitor.inet(), port);
-		EndpointProvider ep = EndpointProvider.udp(new NetworkExecutor(), socketAddress, address, serverAddress);
+		EndpointProvider ep = EndpointProvider.udp(socketAddress, address, serverAddress);
 		return new ServiceAdmin(pair, port, ep);
 	}
 	

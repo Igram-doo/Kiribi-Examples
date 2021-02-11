@@ -69,14 +69,14 @@ public class HelloWorldSession extends Session {
 	}
 		
 	private Future<String> request() throws IOException {
-		final CompletableFuture<String> future = new CompletableFuture<>();
-		Message request = Message.request(CODE);
+		final var future = new CompletableFuture<String>();
+		var request = Message.request(CODE);
 		request(
 			request, 
 			new ResponseAdapter(
 				CODE, 
 				response -> {
-					String result = response.in().readUTF();
+					var result = response.in().readUTF();
 					System.out.println("PROCESSED REQUEST: " + result);
 					future.complete(result);
 				},
@@ -89,7 +89,7 @@ public class HelloWorldSession extends Session {
  		
 	// ---- responses ----
 	Message respond(Message request) throws IOException {
-		Message response = request.respond(CODE);
+		var response = request.respond(CODE);
 		response.out().writeUTF("Hello World!");
 	
 		return response;

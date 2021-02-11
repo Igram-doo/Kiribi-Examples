@@ -48,11 +48,11 @@ public class Main implements Runnable {
 	
 	public static void main(String[] args) {
 		try{
-			int port = NATTServer.SERVER_PORT;
+			var port = NATTServer.SERVER_PORT;
 			String iname = null;
 			
 			for(int i = 0; i < args.length; i++) {
-				String[] components = args[i].split(":");
+				var components = args[i].split(":");
 				switch(components[0]){
 				case "-p":
 					port = Integer.parseInt(components[1]);
@@ -65,7 +65,7 @@ public class Main implements Runnable {
 				}
 			}
 			
-			InetAddress inet = iname == null ?
+			var inet = iname == null ?
 				NetworkMonitor.	inet() :
 				NetworkMonitor.	inet(NetworkInterface.getByName(iname));
 				
@@ -82,7 +82,7 @@ public class Main implements Runnable {
 		natt = new NATTServer();  
 		natt.start(new InetSocketAddress(inet, port));
 		
-		Thread t = new Thread(this, "NATT Server");
+		var t = new Thread(this, "NATT Server");
 		t.setDaemon(false);
 		t.start();
 	}

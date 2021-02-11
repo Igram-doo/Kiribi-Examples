@@ -71,7 +71,7 @@ public class EncryptedStoreDelegate extends StoreDelegate {
 
 	@Override
 	protected VarInputStream in(Path path) throws IOException {
-		byte[] b = Files.readAllBytes(path);
+		var b = Files.readAllBytes(path);
         return new VarInputStream(decrypt(b));
     }
     
@@ -87,9 +87,9 @@ public class EncryptedStoreDelegate extends StoreDelegate {
 		synchronized(encrypter) {
 			try{
 				encrypter.init(key);
-				int M = b.length;
-				int N = encrypter.getBlockSize();
-				byte[] buf = new byte[((M / N) * N) + (2 * N)];
+				var M = b.length;
+				var N = encrypter.getBlockSize();
+				var buf = new byte[((M / N) * N) + (2 * N)];
 				System.arraycopy(b, 0, buf, 0, M);
 				return encrypter.encrypt(buf);
 			}catch(Exception e){
@@ -130,7 +130,7 @@ public class EncryptedStoreDelegate extends StoreDelegate {
 		}
 		
 		void init(byte[] key) {
-			byte[] sk = crop(key, AES_KEY_SIZE);
+			var sk = crop(key, AES_KEY_SIZE);
 			spec = new SecretKeySpec(sk, AES);
 		}
 		
@@ -140,12 +140,12 @@ public class EncryptedStoreDelegate extends StoreDelegate {
 		
 		byte[] encrypt(byte[] b) throws GeneralSecurityException {		
 			try{
-				byte[] nonce = new byte[LEN_NONCE];
+				var nonce = new byte[LEN_NONCE];
 				secureRandom.nextBytes(nonce);
 				cipher.init(ENCRYPT_MODE, spec, new GCMParameterSpec(LEN_TAG, nonce));
-				byte[] encrypted = cipher.doFinal(b);
+				var encrypted = cipher.doFinal(b);
 
-				ByteBuffer byteBuffer = ByteBuffer.allocate(LEN_NONCE + encrypted.length);
+				var byteBuffer = ByteBuffer.allocate(LEN_NONCE + encrypted.length);
 				byteBuffer.put(nonce);
 				byteBuffer.put(encrypted);
 
@@ -157,13 +157,13 @@ public class EncryptedStoreDelegate extends StoreDelegate {
 
 		byte[] decrypt(byte[] b) throws GeneralSecurityException {		
 			try {
-				ByteBuffer byteBuffer = ByteBuffer.wrap(b);
-				byte[] nonce = new byte[LEN_NONCE];
+				var byteBuffer = ByteBuffer.wrap(b);
+				var nonce = new byte[LEN_NONCE];
 				byteBuffer.get(nonce);
-				byte[] encrypted = new byte[b.length - LEN_NONCE];
+				var encrypted = new byte[b.length - LEN_NONCE];
 				byteBuffer.get(encrypted);
 				cipher.init(DECRYPT_MODE, spec, new GCMParameterSpec(LEN_TAG, nonce));
-				byte[] decrypted = cipher.doFinal(encrypted);
+				var decrypted = cipher.doFinal(encrypted);
 				return decrypted;
 			} catch (Exception e) {
 				throw new GeneralSecurityException("Decryption failed", e);

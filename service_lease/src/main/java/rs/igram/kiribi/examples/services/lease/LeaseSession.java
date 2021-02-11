@@ -82,8 +82,8 @@ public abstract class LeaseSession extends Session {
 	// ---- requests ----	
 	protected void renew() {
 		try{
-			Message request = Message.request(CLIENT_REQUEST_RENEW);
-			VarOutput out = request.out();
+			var request = Message.request(CLIENT_REQUEST_RENEW);
+			var out = request.out();
 			out.writeLong(id);
 			request(request, 
 				new ResponseAdapter(
@@ -113,9 +113,9 @@ public abstract class LeaseSession extends Session {
 	}
 	
 	protected  Future<Void> cancel(long id) throws IOException {	
-		final CompletableFuture<Void> future = new CompletableFuture<>();
-		Message request = Message.request(CLIENT_REQUEST_CANCEL);
-		VarOutput out = request.out();
+		final var future = new CompletableFuture<Void>();
+		var request = Message.request(CLIENT_REQUEST_CANCEL);
+		var out = request.out();
 		out.writeLong(id);
 		request(
 			request, 
@@ -146,7 +146,7 @@ public abstract class LeaseSession extends Session {
 	protected void canceled() {}
 	
 	protected static final Future<?> submitTask(Runnable task) {
-		ForkJoinTask<?> t = ForkJoinTask.adapt(task);
+		var t = ForkJoinTask.adapt(task);
 		return executor.submit(t);
 	}
 }

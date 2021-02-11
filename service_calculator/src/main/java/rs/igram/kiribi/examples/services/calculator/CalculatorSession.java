@@ -72,51 +72,51 @@ public class CalculatorSession extends Session {
 		
 	// ---- responses ----
 	Message add(Message request) throws IOException {
-		double a = request.in().readDouble();
-		double b = request.in().readDouble();
-		double result = a + b;
+		var a = request.in().readDouble();
+		var b = request.in().readDouble();
+		var result = a + b;
 		System.out.println("PROCESSED REQUEST - ADDED: " + result);
-		Message response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
+		var response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
 		response.out().writeDouble(result);
 		
 		return response;
 	}
 		
 	Message subtract(Message request) throws IOException {
-		double a = request.in().readDouble();
-		double b = request.in().readDouble();
-		double result = a - b;
+		var a = request.in().readDouble();
+		var b = request.in().readDouble();
+		var result = a - b;
 		System.out.println("PROCESSED REQUEST - SUBTRACTED: " + result);
-		Message response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
+		var response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
 		response.out().writeDouble(result);
 		
 		return response;
 	}
 		
 	Message multiply(Message request) throws IOException {
-		double a = request.in().readDouble();
-		double b = request.in().readDouble();
-		double result = a * b;
+		var a = request.in().readDouble();
+		var b = request.in().readDouble();
+		var result = a * b;
 		System.out.println("PROCESSED REQUEST - MULTPLIED: " + result);
-		Message response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
+		var response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
 		response.out().writeDouble(result);
 		
 		return response;
 	}
 		
 	Message divide(Message request) throws IOException {
-		double a = request.in().readDouble();
-		double b = request.in().readDouble();
+		var a = request.in().readDouble();
+		var b = request.in().readDouble();
 		
 		if (b == 0.0) {
 			System.out.println("PROCESSED REQUEST - DIVIDED BY ZERO");
-			Message response = request.respond(SERVICE_RESPONSE_INVALID_INPUT);
+			var response = request.respond(SERVICE_RESPONSE_INVALID_INPUT);
 			response.out().writeUTF("Cannot divide by zero");
 			return response;
 		} else {
-			double result = a / b;
+			var result = a / b;
 			System.out.println("PROCESSED REQUEST - DIVIDED: " + result);
-			Message response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
+			var response = request.respond(SERVICE_RESPONSE_VALID_INPUT);
 			response.out().writeDouble(result);
 		
 			return response;
@@ -133,8 +133,8 @@ public class CalculatorSession extends Session {
 	}
 		
 	private Future<Double> add(double a, double b) throws IOException {
-		final CompletableFuture<Double> future = new CompletableFuture<>();
-		Message request = Message.request(CLIENT_REQUEST_ADD);
+		final var future = new CompletableFuture<Double>();
+		var request = Message.request(CLIENT_REQUEST_ADD);
 		request.out().writeDouble(a);
 		request.out().writeDouble(b);
 		request(
@@ -142,7 +142,7 @@ public class CalculatorSession extends Session {
 			new ResponseAdapter(
 				SERVICE_RESPONSE_VALID_INPUT, 
 				response -> {
-					double result = response.in().readDouble();
+					var result = response.in().readDouble();
 					future.complete(result);
 				},
 				error -> future.completeExceptionally(new IOException(error))
@@ -160,8 +160,8 @@ public class CalculatorSession extends Session {
 	}
 		
 	private Future<Double> subtract(double a, double b) throws IOException {
-		final CompletableFuture<Double> future = new CompletableFuture<>();
-		Message request = Message.request(CLIENT_REQUEST_SUBTRACT);
+		final var future = new CompletableFuture<Double>();
+		var request = Message.request(CLIENT_REQUEST_SUBTRACT);
 		request.out().writeDouble(a);
 		request.out().writeDouble(b);
 		request(
@@ -169,7 +169,7 @@ public class CalculatorSession extends Session {
 			new ResponseAdapter(
 				SERVICE_RESPONSE_VALID_INPUT, 
 				response -> {
-					double result = response.in().readDouble();
+					var result = response.in().readDouble();
 					future.complete(result);
 				},
 				error -> future.completeExceptionally(new IOException(error))
@@ -187,8 +187,8 @@ public class CalculatorSession extends Session {
 	}
 		
 	private Future<Double> multiply(double a, double b) throws IOException {
-		final CompletableFuture<Double> future = new CompletableFuture<>();
-		Message request = Message.request(CLIENT_REQUEST_MULTIPLY);
+		final var future = new CompletableFuture<Double>();
+		var request = Message.request(CLIENT_REQUEST_MULTIPLY);
 		request.out().writeDouble(a);
 		request.out().writeDouble(b);
 		request(
@@ -196,7 +196,7 @@ public class CalculatorSession extends Session {
 			new ResponseAdapter(
 				SERVICE_RESPONSE_VALID_INPUT, 
 				response -> {
-					double result = response.in().readDouble();
+					var result = response.in().readDouble();
 					future.complete(result);
 				},
 				error -> future.completeExceptionally(new IOException(error))
@@ -214,8 +214,8 @@ public class CalculatorSession extends Session {
 	}
 		
 	private Future<Double> divide(double a, double b) throws IOException {
-		final CompletableFuture<Double> future = new CompletableFuture<>();
-		Message request = Message.request(CLIENT_REQUEST_DIVIDE);
+		final var future = new CompletableFuture<Double>();
+		var request = Message.request(CLIENT_REQUEST_DIVIDE);
 		request.out().writeDouble(a);
 		request.out().writeDouble(b);
 		request(
@@ -223,7 +223,7 @@ public class CalculatorSession extends Session {
 			new ResponseAdapter(
 				SERVICE_RESPONSE_VALID_INPUT, 
 				response -> {
-					double result = response.in().readDouble();
+					var result = response.in().readDouble();
 					future.complete(result);
 				},
 				error -> future.completeExceptionally(new IOException(error))
@@ -231,7 +231,7 @@ public class CalculatorSession extends Session {
 			new ResponseAdapter(
 				SERVICE_RESPONSE_INVALID_INPUT, 
 				response -> {
-					String result = response.in().readUTF();
+					var result = response.in().readUTF();
 					future.completeExceptionally(new IllegalArgumentException(result));
 				},
 				error -> future.completeExceptionally(new IOException(error))

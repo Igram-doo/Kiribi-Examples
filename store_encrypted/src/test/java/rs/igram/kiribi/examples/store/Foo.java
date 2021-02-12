@@ -87,7 +87,7 @@ public class Foo implements Encodable {
    	@Override
    	public boolean equals(Object o) {
    	   	if(o == null || !(o instanceof Foo)) return false;
-   	   	Foo t = (Foo)o;
+   	   	var t = (Foo)o;
    	   	return l == t.l && Arrays.equals(b, t.b);
    	}
 }

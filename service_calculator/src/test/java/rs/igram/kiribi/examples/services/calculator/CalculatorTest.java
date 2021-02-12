@@ -104,8 +104,8 @@ class CalculatorTest {
    public void testRestrictedConnect() throws IOException, InterruptedException, Exception {
    	   setup();
    	   configureEntities(Scope.RESTRICTED);
-   	   ServiceAddress address = admin1.address(ID);
-   	   CalculatorSession client = new CalculatorSession(Scope.RESTRICTED, address);
+   	   var address = admin1.address(ID);
+   	   var client = new CalculatorSession(Scope.RESTRICTED, address);
    	   
    	   client.connect(admin2);
    	   
@@ -139,9 +139,9 @@ class CalculatorTest {
    }
  	
    static ServiceAdmin admin(KeyPair pair, int port, InetSocketAddress serverAddress) throws Exception {
-		Address address = new Address(pair.getPublic());
-		InetSocketAddress socketAddress = new InetSocketAddress(NetworkMonitor.inet(), port);
-		EndpointProvider ep = EndpointProvider.udp(socketAddress, address, serverAddress);
+		var address = new Address(pair.getPublic());
+		var socketAddress = new InetSocketAddress(NetworkMonitor.inet(), port);
+		var ep = EndpointProvider.udp(socketAddress, address, serverAddress);
 		return new ServiceAdmin(pair, port, ep);
 	}
 	
@@ -165,15 +165,15 @@ class CalculatorTest {
 	}
 	
 	void configureEntities(Scope scope) throws Exception {
-		CountDownLatch latch = new CountDownLatch(2);
+		var latch = new CountDownLatch(2);
 		bob = new Entity(true, address(PAIR2).toString(), BOB);
 		alice = new Entity(true, address(PAIR1).toString(), ALICE);
 		
-		ServiceAddress address = admin1.address(ID); 
-		CalculatorService service = new CalculatorService(address, scope);
+		var address = admin1.address(ID); 
+		var service = new CalculatorService(address, scope);
 		admin1.activate(service);
 		
-		Set<Descriptor> granted = Set.of(service.getDescriptor());
+		var granted = Set.of(service.getDescriptor());
 		bob.setGranted(granted);
 		
 		mgr1.setOnExchange(e -> latch.countDown());
@@ -187,7 +187,7 @@ class CalculatorTest {
 		latch.await();
 	}
 	
-	static rs.igram.kiribi.net.Address address(KeyPair pair) {
-		return new rs.igram.kiribi.net.Address(pair.getPublic());
+	static Address address(KeyPair pair) {
+		return new Address(pair.getPublic());
 	}
 }

@@ -101,9 +101,9 @@ class HelloWorldTest {
 	Entity alice;
 	
 	static ServiceAdmin admin(KeyPair pair, int port, InetSocketAddress serverAddress) throws Exception {
-		Address address = new Address(pair.getPublic());
-		InetSocketAddress socketAddress = new InetSocketAddress(NetworkMonitor.inet(), port);
-		EndpointProvider ep = EndpointProvider.udp(socketAddress, address, serverAddress);
+		var address = new Address(pair.getPublic());
+		var socketAddress = new InetSocketAddress(NetworkMonitor.inet(), port);
+		var ep = EndpointProvider.udp(socketAddress, address, serverAddress);
 		return new ServiceAdmin(pair, port, ep);
 	}
 	
@@ -111,12 +111,12 @@ class HelloWorldTest {
    public void testRestrictedConnect() throws IOException, InterruptedException, Exception {
    	   setup();
    	   configureEntities(Scope.RESTRICTED);
-   	   ServiceAddress address = admin1.address(ID);
-   	   HelloWorldSession client = new HelloWorldSession(Scope.RESTRICTED, address);
+   	   var address = admin1.address(ID);
+   	   var client = new HelloWorldSession(Scope.RESTRICTED, address);
    	   
    	   client.connect(admin2);
    	   
-   	   String result = client.request(5);
+   	   var result = client.request(5);
    	   assertEquals("Hello World!", result);
    	   
    	   shutdown();
@@ -142,15 +142,15 @@ class HelloWorldTest {
 	}
 	
 	void configureEntities(Scope scope) throws Exception {
-		CountDownLatch latch = new CountDownLatch(2);
+		var latch = new CountDownLatch(2);
 		bob = new Entity(true, address(PAIR2).toString(), BOB);
 		alice = new Entity(true, address(PAIR1).toString(), ALICE);
 		
-		ServiceAddress address = admin1.address(ID); 
-		HelloWorldService service = new HelloWorldService(address, scope);
+		var address = admin1.address(ID); 
+		var service = new HelloWorldService(address, scope);
 		admin1.activate(service);
 		
-		Set<Descriptor> granted = Set.of(service.getDescriptor());
+		var granted = Set.of(service.getDescriptor());
 		bob.setGranted(granted);
 		
 		mgr1.setOnExchange(e -> latch.countDown());
@@ -164,7 +164,7 @@ class HelloWorldTest {
 		latch.await();
 	}
 	
-	static rs.igram.kiribi.net.Address address(KeyPair pair) {
-		return new rs.igram.kiribi.net.Address(pair.getPublic());
+	static Address address(KeyPair pair) {
+		return new Address(pair.getPublic());
 	}
 }

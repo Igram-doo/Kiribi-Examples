@@ -74,7 +74,7 @@ public class Bar implements Encodable {
    	@Override
    	public boolean equals(Object o) {
    	   	if(o == null || !(o instanceof Bar)) return false;
-   	   	Bar t = (Bar)o;
+   	   	var t = (Bar)o;
    	   	return i == t.i && s.equals(t.s);
    	}
 }

@@ -74,10 +74,10 @@ public class EncryptedStoreDelegateTest {
    public void testPreexisting() throws IOException {
    	   assertTrue(Files.isDirectory(root));
    	   
-   	   byte[] key = key();
+   	   var key = key();
    	   
-   	   StoreDelegate delegate = new EncryptedStoreDelegate(key, root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null);  	   
+   	   var delegate = new EncryptedStoreDelegate(key, root, scheme); 
+   	   var store = new ObjectStore(delegate, null);  	   
    	   assertFalse(delegate.preexisting());
    	   
    	   delegate = new EncryptedStoreDelegate(key, root, scheme); 
@@ -87,15 +87,15 @@ public class EncryptedStoreDelegateTest {
 	
    @Test
    public void testExists() throws IOException {
-   	   byte[] key = key();
+   	   var key = key();
    	   
-   	   StoreDelegate delegate = new EncryptedStoreDelegate(key, root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null); 
-   	   String name = "b";
+   	   var delegate = new EncryptedStoreDelegate(key, root, scheme); 
+   	   var store = new ObjectStore(delegate, null); 
+   	   var name = "b";
    	   
    	   assertFalse(store.exists(name));
    	   
-   	   Path path = dir(root, scheme).resolve(name);
+   	   var path = dir(root, scheme).resolve(name);
    	   Files.createFile(path);
    	   
    	   assertTrue(store.exists(name));
@@ -105,13 +105,13 @@ public class EncryptedStoreDelegateTest {
    public void testRemove() throws IOException {
    	   byte[] key = key();
    	   
-   	   StoreDelegate delegate = new EncryptedStoreDelegate(key, root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null); 
-   	   String name = "c";
+   	   var delegate = new EncryptedStoreDelegate(key, root, scheme); 
+   	   var store = new ObjectStore(delegate, null); 
+   	   var name = "c";
    	   
    	   assertFalse(store.exists(name));
    	   
-   	   Path path = dir(root, scheme).resolve(name);
+   	   var path = dir(root, scheme).resolve(name);
    	   Files.createFile(path);
    	   
    	   assertTrue(store.exists(name));
@@ -121,16 +121,16 @@ public class EncryptedStoreDelegateTest {
 
    @Test
    public void testIO() throws IOException {
-   	   byte[] key = key();
+   	   var key = key();
    	   
-   	   StoreDelegate delegate = new EncryptedStoreDelegate(key, root, scheme); 
-   	   ObjectStore store = new ObjectStore(delegate, null); 
-   	   String name = "foo";
+   	   var delegate = new EncryptedStoreDelegate(key, root, scheme); 
+   	   var store = new ObjectStore(delegate, null); 
+   	   var name = "foo";
    	   
-   	   Foo foo = new Foo();
+   	   var foo = new Foo();
    	   store.put(name, foo);
    	   // WTF??? shouldn'' need to cast
-   	   Foo test = (Foo)store.get(name, Foo::new);
+   	   var test = (Foo)store.get(name, Foo::new);
    	   
    	   assertEquals(foo, test);
    	   
@@ -145,13 +145,13 @@ public class EncryptedStoreDelegateTest {
    }
    
    static Path dir(Path root, String... schema) {
-   	   Path d = root;
+   	   var d = root;
 		for(String s : schema) d = root.resolve(s);
 		return d;
    }
    
    static byte[] key() {
-   	   byte[] key = new byte[16];
+   	   var key = new byte[16];
    	   random(key);
    	   return key;
    }
